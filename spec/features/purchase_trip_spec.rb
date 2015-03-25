@@ -56,14 +56,14 @@ describe "purchasing a trip" do
       order = Order.last
       expect(order.trip_item.unit_price).to eq(1200)
       expect(order.trip_item.amount).to eq(1)
-      expect(order.trip_item.extended_price).to eq(1200)
+      expect(order.trip_item.extended_price).to eq(1200 + 10) # $10 per trip
       expect(order.hotel_item.unit_price).to eq(500)
       expect(order.hotel_item.amount).to eq(4)
-      expect(order.hotel_item.extended_price).to eq(2000)
+      expect(order.hotel_item.extended_price).to eq(2000 + 4 * 10) # $10 per hotel night if free is over $250
       expect(order.activity_items.first.unit_price).to eq(400)
       expect(order.activity_items.first.amount).to eq(1)
-      expect(order.activity_items.first.extended_price).to eq(400)
-      expect(order.total_price_paid).to eq(3600)
+      expect(order.activity_items.first.extended_price).to eq(400 + 5) # $5 per activity
+      expect(order.total_price_paid).to eq(3600 + 10 + 40 * 10 + 5 + 3) # $1 per 100 years from 2015
     end
   end
 
